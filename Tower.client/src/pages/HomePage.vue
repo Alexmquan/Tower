@@ -15,7 +15,7 @@
     <!-- SECTION Event Cards -->
     <section class="row">
       <div class="col-md-3 col-12" v-for="e in events" :key="e.id">
-        <EventCard :event="e" />
+        <EventCard :towerEvent="e" />
       </div>
     </section>
   </div>
@@ -44,7 +44,7 @@ export default {
       getAllEvents()
     })
     return {
-      events: computed(() => AppState.towerEvent)
+      events: computed(() => AppState.towerEvents)
     }
   }
 }
