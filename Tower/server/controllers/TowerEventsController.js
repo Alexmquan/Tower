@@ -23,7 +23,7 @@ export class TowerEventsController extends BaseController {
       let event = await towerEventsService.createEvent(eventData)
       return res.send(event)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
@@ -42,18 +42,19 @@ export class TowerEventsController extends BaseController {
       let event = await towerEventsService.getSingleEvent(eventId)
       return res.send(event)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
   async editEvent(req, res, next) {
     try {
-      const eventEdit = req.body
       const eventId = req.params.id
+      const eventEdit = req.body
+
       const editedEvent = await towerEventsService.editEvent(eventEdit, eventId)
       return res.send(editedEvent)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
@@ -64,7 +65,7 @@ export class TowerEventsController extends BaseController {
       let message = await towerEventsService.cancelEvent(eventId, userId)
       return res.send(message)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
@@ -74,7 +75,7 @@ export class TowerEventsController extends BaseController {
       const tickets = await ticketsService.getEventTickets(eventId)
       return res.send(tickets)
     } catch (error) {
-      next.error
+      next(error)
     }
   }
 

@@ -25,6 +25,9 @@ class TowerEventsService {
   }
   async editEvent(eventEdit, eventId) {
     const originalEvent = await this.getSingleEvent(eventId)
+    if (originalEvent.isCanceled == true) {
+      throw new BadRequest("This event is cancelled")
+    }
 
     originalEvent.name = eventEdit.name ? eventEdit.name : originalEvent.name
     originalEvent.description = eventEdit.description ? eventEdit.description : originalEvent.description
@@ -32,7 +35,7 @@ class TowerEventsService {
     originalEvent.location = eventEdit.location ? eventEdit.location : originalEvent.location
     originalEvent.capacity = eventEdit.capacity ? eventEdit.capacity : originalEvent.capacity
     originalEvent.startDate = eventEdit.startDate ? eventEdit.startDate : originalEvent.startDate
-    originalEvent.isCanceled = eventEdit.isCanceled ? eventEdit.isCanceled : originalEvent.isCanceled
+    // originalEvent.isCanceled = eventEdit.isCanceled ? eventEdit.isCanceled : originalEvent.isCanceled
     originalEvent.type = eventEdit.type ? eventEdit.type : originalEvent.type
 
     await originalEvent.save()

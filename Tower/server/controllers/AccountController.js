@@ -27,7 +27,7 @@ export class AccountController extends BaseController {
       let tickets = await ticketsService.getMyTickets(accountId)
       return res.send(tickets)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 }

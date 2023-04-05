@@ -18,22 +18,28 @@ class TicketsService {
         path: "creator"
       }
     })
-
+    if (ticket.eventId) {
+      event.capacity--
+    }
+    await event.save()
     await ticket.populate("profile")
     return ticket
   }
 
   async deleteTicket(ticketId, userId) {
     let ticket = await dbContext.Tickets.findById(ticketId)
-
     if (ticket == null) {
       throw new BadRequest("That ticket does not exist.")
     }
+    const event = await towerEventsService.getSingleEvent(ticket.eventId)
 
     if (userId != ticket.accountId) {
       throw new Forbidden('This ticket does not belong to you.')
     }
-
+    if (ticket.eventId) {
+      event.capacity++
+    }
+    await event.save()
     await ticket.remove()
     return `Ticket has been successfully removed`
   }

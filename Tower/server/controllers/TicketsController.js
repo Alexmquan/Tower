@@ -15,11 +15,11 @@ export class TicketsController extends BaseController {
   async createTicket(req, res, next) {
     try {
       let ticketData = req.body
-      ticketData.creatorId = req.userInfo.id
+      ticketData.accountId = req.userInfo.id
       const ticket = await ticketsService.createTicket(ticketData)
       return res.send(ticket)
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
@@ -31,7 +31,7 @@ export class TicketsController extends BaseController {
       return res.send(message)
 
     } catch (error) {
-      next.error(error)
+      next(error)
     }
   }
 
