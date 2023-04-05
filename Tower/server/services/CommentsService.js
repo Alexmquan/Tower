@@ -8,6 +8,16 @@ class CommentsService {
     if (event.isCanceled == true) {
       throw new BadRequest('This event is cancelled')
     }
+    const comment = await dbContext.Comments.create(commentData)
+    await comment.populate("creator", 'picture name')
+    return comment
+  }
+
+  async getAllComments(eventId) {
+    const events = await dbContext.Comments.find({ eventId })
+      .populate('creator', "picture name")
+    return events
+
   }
 
 }
