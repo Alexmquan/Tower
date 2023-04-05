@@ -23,8 +23,13 @@ class TowerEventsService {
     }
     return event
   }
-  async editEvent(eventEdit, eventId) {
+  async editEvent(eventEdit, eventId, userId) {
     const originalEvent = await this.getSingleEvent(eventId)
+
+    if (originalEvent.creatorId != userId) {
+      throw new BadRequest("You do not have permission to edit this event")
+    }
+
     if (originalEvent.isCanceled == true) {
       throw new BadRequest("This event is cancelled")
     }

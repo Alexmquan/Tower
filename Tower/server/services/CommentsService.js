@@ -17,9 +17,21 @@ class CommentsService {
     const events = await dbContext.Comments.find({ eventId })
       .populate('creator', "picture name")
     return events
-
   }
 
+  async deleteComment(userId, commentId) {
+    let comment = await dbContext.Comments.findById(commentId)
+    if (comment == null) {
+      throw new BadRequest("This comment does not exist.")
+    }
+
+    if (comment.creatorId != userId) {
+      throw new BadRequest("You are not authorized to delete this comment")
+    }
+
+    await comment.remove()
+    return ("Your comment has been successfully deleted")
+  }
 }
 
 export const commentsService = new CommentsService()

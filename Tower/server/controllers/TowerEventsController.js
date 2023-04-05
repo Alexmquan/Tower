@@ -52,8 +52,8 @@ export class TowerEventsController extends BaseController {
     try {
       const eventId = req.params.id
       const eventEdit = req.body
-
-      const editedEvent = await towerEventsService.editEvent(eventEdit, eventId)
+      const userId = req.userInfo.id
+      const editedEvent = await towerEventsService.editEvent(eventEdit, eventId, userId)
       return res.send(editedEvent)
     } catch (error) {
       next(error)
