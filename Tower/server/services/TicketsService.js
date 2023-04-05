@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
-import { BadRequest } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 import { towerEventsService } from "./TowerEventsService.js"
 
 class TicketsService {
@@ -27,15 +27,15 @@ class TicketsService {
     let ticket = await dbContext.Tickets.findById(ticketId)
 
     if (ticket == null) {
-      throw new BadRequest("That Collaborator doesn't exist.")
+      throw new BadRequest("That ticket does not exist.")
     }
 
     if (userId != ticket.accountId) {
-      throw new Forbidden(`You can't delete somebody else. FOO!`)
+      throw new Forbidden('This ticket does not belong to you.')
     }
 
     await ticket.remove()
-    return `You are no longer collaborated on this project.`
+    return `Ticket has been successfully removed`
   }
 
 
