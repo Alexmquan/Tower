@@ -9,6 +9,11 @@ class EventsService {
     AppState.towerEvents = res.data.map(e => new TowerEvent(e))
     logger.log('[get all TowerEvents]', AppState.towerEvents)
   }
+
+  async getEventById()
+
+
+
 }
 
 export const eventsService = new EventsService()
