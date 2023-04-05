@@ -45,15 +45,19 @@
       <div class="col-9 comment-section rounded">
         <p class="text-light mt-2">What people are saying</p>
         <div class="m-4">
-          <form @submit.prevent="">
+          <form @submit.prevent="createComment()">
             <div>
-              <textarea name="" id="" cols="30" rows="10" class="form-control"
+              <textarea name="body" id="body" required cols="30" rows="6" v-model="commentBody.body" class="form-control"
                 placeholder="Tell the people..."></textarea>
             </div>
             <div class="mt-3 d-flex justify-content-end">
               <button type="submit" class="btn btn-success">Post Comment</button>
             </div>
           </form>
+        </div>
+        <div class="row" v-for="c in comments" :key="c.id">
+          <!-- comment card here -->
+          <CommentCard :comment="c" />
         </div>
       </div>
     </section>
@@ -62,17 +66,20 @@
 
 
 <script>
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { AppState } from "../AppState.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { attendeesService } from "../services/AttendeesService.js";
+import { commentsService } from "../services/CommentsService.js";
 
 export default {
   setup() {
     const route = useRoute()
+
+    const commentBody = ref({})
 
     async function getEventById() {
       try {
@@ -94,13 +101,38 @@ export default {
       }
     }
 
+    async function getCommentsByEvent() {
+      try {
+        const eventId = route.params.eventId
+        await commentsService.getCommentsByEvent(eventId)
+      } catch (error) {
+        logger.error(error.message)
+        Pop.error(error.message)
+      }
+    }
+
     onMounted(() => {
       getEventById()
       getAttendees()
+      getCommentsByEvent()
     })
     return {
+      commentBody,
       activeEvent: computed(() => AppState.activeTowerEvent),
-      attendees: computed(() => AppState.attendees)
+      attendees: computed(() => AppState.attendees),
+      comments: computed(() => AppState.comments),
+
+      async createComment() {
+        try {
+          const commentData = commentBody.value
+          commentData.eventId = route.params.eventId
+          await commentsService.createComment(commentData)
+        } catch (error) {
+          logger.error(error.message)
+          Pop.error(error.message)
+        }
+      }
+
     }
   }
 }
@@ -143,7 +175,7 @@ export default {
   height: 45vh !important;
   object-fit: cover !important;
 
-  -webkit-filter: blur(6px);
+  -webkit-filter: blur(8px);
   ;
 }
 
