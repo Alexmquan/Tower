@@ -2,12 +2,10 @@
   <!-- SECTION Home Page Image With text over -->
   <div class="container-fluid main-bg">
     <section class="row">
-      <div class="col-12">
-
-        <img class="top-img"
-          src="https://images.unsplash.com/photo-1573339886518-264aa6f194b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-          alt="" height="300">
-
+      <div class="col-12 top-img m-3 justify-content-evenly d-flex flex-column text-light">
+        <h3 class="ms-5 top-text">Get ahead of the scalpers.</h3>
+        <h3 class="ms-5 top-text">Reserve your seat now with</h3>
+        <h3 class="ms-5 top-text">real events for real people.</h3>
       </div>
     </section>
 
@@ -73,7 +71,7 @@ export default {
       }),
 
       changeEventType(type) {
-        filterType = type
+        filterType.value = type
       }
     }
   }
@@ -88,5 +86,17 @@ export default {
 
 .main-bg {
   background-color: rgb(54, 134, 117);
+}
+
+.top-img {
+  background-image: url("https://images.unsplash.com/photo-1573339886518-264aa6f194b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+  background-position: center;
+  background-size: cover;
+  width: 98.5%;
+  height: 25vh
+}
+
+.top-text {
+  text-shadow: 2px 2px 6px black;
 }
 </style>
