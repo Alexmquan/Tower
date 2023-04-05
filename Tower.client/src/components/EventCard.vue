@@ -1,5 +1,5 @@
 <template>
-  <div class="card m-2 my-3">
+  <div class="card m-2 my-3 rounded">
     <img :src="towerEvent.coverImg" :alt="towerEvent.name" height="300">
     <div class="p-2 card-bg">
       <h5>{{ towerEvent.name }}</h5>
