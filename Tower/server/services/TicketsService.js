@@ -38,6 +38,23 @@ class TicketsService {
     return `Ticket has been successfully removed`
   }
 
+  async getMyTickets(accountId) {
+    let events = await dbContext.Tickets.find({ accountId })
+      .populate({
+        path: "event",
+        populate: {
+          // FIXME may need to add another path later
+          path: "creator"
+        }
+      })
+    return events
+  }
+
+  async getEventTickets(eventId) {
+    const tickets = await dbContext.Tickets.find({ eventId })
+      .populate("profile", 'name picture')
+    return tickets
+  }
 
 }
 
