@@ -16,10 +16,12 @@ class AccountService {
   }
 
   async getMyTickets() {
+    // debugger
     const res = await api.get('account/tickets')
     logger.log('Get My tickets raw data', res.data)
-    AppState.attendees = res.data.map(e => new Attendee(e))
-    logger.log('[get My tickets]', AppState.attendees)
+    // AppState.myAttendees = res.data
+    AppState.myAttendees = res.data.map(e => new Attendee(e))
+    logger.log('[get My tickets]', AppState.myAttendees)
   }
 }
 

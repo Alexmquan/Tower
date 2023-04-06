@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-6 col-12">
               <label for="location">Location</label>
-              <input type="text" v-model="creatable.location" name="location" class="form-control" id="location"
+              <input type="text" required v-model="creatable.location" name="location" class="form-control" id="location"
                 maxlength="100">
             </div>
             <div class="col-12">
@@ -74,15 +74,24 @@
 
 
 <script>
+import { propsToAttrMap } from "@vue/shared";
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { AppState } from "../AppState.js";
+import { TowerEvent } from "../models/TowerEvent.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 
 export default {
+  // props: {
+  //   activeEvent: {
+  //     type: TowerEvent,
+  //     required: true
+  //   }
+  // },
   setup() {
-
+    const router = useRouter()
     const creatable = ref({})
 
     return {
@@ -94,7 +103,11 @@ export default {
         try {
           logger.log('[modal create event]', creatable.value)
           const eventData = creatable.value
-          await eventsService.createEvent(eventData)
+          const event = await eventsService.createEvent(eventData)
+          logger.log(event.id)
+          // FIXME doesnt push when on details page for something else
+          router.push({ name: 'EventDetails', params: { eventId: event.id } })
+
         } catch (error) {
           logger.error(error.message)
           Pop.error(error.message)
