@@ -1,5 +1,5 @@
 import { AppState } from "../AppState.js"
-import { TowerEvent } from "../models/TowerEvent.js"
+import { MyEvent, TowerEvent } from "../models/TowerEvent.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -17,7 +17,11 @@ class EventsService {
   }
 
   async createEvent(eventData) {
-
+    // FIXME may need to fix later (9:47pm 4.5.2023)
+    const res = await api.post('/api/events', eventData)
+    AppState.myEvents.push(new MyEvent(res.data))
+    AppState.towerEvents.push(new TowerEvent(res.data))
+    logger.log('[created Event', AppState.myEvents)
   }
 
 

@@ -27,7 +27,8 @@
                 maxlength="500">
             </div>
             <div class="col-12">
-              <select class="form-select my-3" aria-label="Default select example">
+              <select class="form-select my-3" aria-label="Default select example" v-model="creatable.type" required
+                name="type" id="type">
                 <option disabled selected>Event type</option>
                 <option value="concert">Concert</option>
                 <option value="convention">Convention</option>
@@ -91,6 +92,7 @@ export default {
 
       async createEvent() {
         try {
+          logger.log('[modal create event]', creatable.value)
           const eventData = creatable.value
           await eventsService.createEvent(eventData)
         } catch (error) {
