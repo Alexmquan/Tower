@@ -25,6 +25,7 @@
               <h4 class="ms-2">spots left</h4>
             </div>
             <div class="col-3 align-items-end d-flex">
+              <!-- FIXME add check so you cannot attend more than once -->
               <button @click="createTicket()" class="btn btn-warning">Attend</button>
             </div>
           </div>

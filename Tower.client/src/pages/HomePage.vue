@@ -11,12 +11,12 @@
 
     <!-- SECTION Sort Bar -->
     <section class="row justify-content-evenly filter-bg text-light align-items-center">
-      <div class="col-2 d-flex justify-content-center" @click="changeEventType('')">
+      <div class="col-md-2 col-12 d-flex justify-content-center" @click="changeEventType('')">
         <div class="selectable ">
           <h2>ALL</h2>
         </div>
       </div>
-      <div class="col-2 d-flex" @click="changeEventType(t)" v-for="t in eventTypes">
+      <div class="col-md-2 col-12 d-flex" @click="changeEventType(t)" v-for="t in eventTypes">
         <div class="selectable">
           <h2>{{ t.toUpperCase() }}</h2>
         </div>
