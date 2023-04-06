@@ -5,12 +5,13 @@
     </div>
     <div class="col-8 d-flex justify-content-between">
       <div class="d-flex flex-column">
-        <h3 class="mb-3">{{ myAttendees.event.name }}</h3>
+        <h3 class="my-3">{{ myAttendees.event.name }}</h3>
         <h6>{{ myAttendees.event.location }}</h6>
         <h6>{{ myAttendees.event.startDate }}</h6>
       </div>
-      <div class="m-3">
+      <div class="m-3 flex-column d-flex justify-content-between">
         <button @click="deleteTicket(myAttendees.id)" class="btn btn-danger">Not Going</button>
+        <img class="qrCode mb-3" src="src\assets\img\QR_code.png" alt="">
       </div>
     </div>
   </div>
@@ -64,5 +65,10 @@ export default {
 
 .card-style {
   background-color: rgb(22, 22, 61);
+}
+
+.qrCode {
+  height: 10vh;
+  width: 10vh;
 }
 </style>

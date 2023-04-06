@@ -105,7 +105,6 @@ export default {
           const eventData = creatable.value
           const event = await eventsService.createEvent(eventData)
           logger.log(event.id)
-          // FIXME doesnt push when on details page for something else
           router.push({ name: 'EventDetails', params: { eventId: event.id } })
 
         } catch (error) {

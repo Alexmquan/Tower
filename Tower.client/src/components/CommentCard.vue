@@ -5,7 +5,8 @@
     <div class="card-style ps-2 m-2 my-3 rounded d-flex flex-column justify-content-center">
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="pt-2">{{ comment.creator.name }}</h5>
-        <button @click="deleteComment()" class="btn btn-outline-danger m-1"><i class="mdi mdi-trash-can"></i></button>
+        <button @click="deleteComment()" class="btn btn-outline-danger m-1" title="Delete Comment"><i
+            class="mdi mdi-trash-can"></i></button>
       </div>
       <p>{{ comment.body }}</p>
     </div>

@@ -20,13 +20,13 @@
             <div class="col-12">
               <p>{{ activeEvent?.description }}</p>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div v-if="account.id == activeEvent?.creatorId">
                 <button class="btn btn-warning ms-3" data-bs-toggle="modal" data-bs-target="#eventModal">Edit
                   Event</button>
 
               </div>
-            </div>
+            </div> -->
             <div class="col-12" v-if="!activeEvent?.isCanceled">
               <div class="row">
                 <div class="col-9 d-flex align-items-end">
@@ -42,7 +42,7 @@
                       class="btn btn-danger ms-3">Cancel Event
                     </button>
                     <!-- FIXME add check so you cannot attend more than once -->
-                    <button v-if="(activeEvent?.capacity > 0) || (attendees.eventId == activeEvent?.id)"
+                    <button v-if="(activeEvent?.capacity > 0) && (isAttending?.accountId != account.id)"
                       @click="createTicket()" class="btn btn-warning">Attend</button>
                   </div>
                 </div>
@@ -95,18 +95,20 @@
 
 
 <script>
-import { onMounted, computed, ref } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted, computed, ref, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { AppState } from "../AppState.js";
 import { eventsService } from "../services/EventsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { attendeesService } from "../services/AttendeesService.js";
 import { commentsService } from "../services/CommentsService.js";
+import { router } from "../router.js";
 
 export default {
   setup() {
     const route = useRoute()
+    const router = useRouter()
 
     const commentBody = ref({})
 
@@ -140,6 +142,18 @@ export default {
       }
     }
 
+    watchEffect(() => {
+      if (route.params) {
+        getEventById()
+      }
+    })
+
+    watchEffect(() => {
+      if (AppState.activeTowerEvent?.capacity) {
+
+      }
+    })
+
     onMounted(() => {
       getEventById()
       getAttendees()
@@ -151,6 +165,8 @@ export default {
       attendees: computed(() => AppState.attendees),
       comments: computed(() => AppState.comments.reverse()),
       account: computed(() => AppState.account),
+      isAttending: computed(() => AppState.attendees.find(a => a.accountId == AppState.account.id)),
+      // isCollab: computed(() => AppState.albumMembers.find(c => c.id == AppState.account.id)),
 
       async createComment() {
         try {

@@ -17,7 +17,7 @@
       <div v-if="account.id" class="">
         <router-link :to="{ name: 'Account' }">
           <button class="btn btn-success">
-            Manage Account
+            My Account
           </button>
         </router-link>
         <!-- <div class="collapse navbar-collapse" id="navbarText">
