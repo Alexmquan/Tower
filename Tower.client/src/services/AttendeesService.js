@@ -9,7 +9,7 @@ class AttendeesService {
     // debugger
     const res = await api.get(`api/events/${eventId}/tickets`)
     AppState.attendees = res.data.map(a => new Attendee(a))
-    logger.log('[Attnees from Appstate', AppState.attendees)
+    logger.log('[Atendees from Appstate', AppState.attendees)
   }
   async createTicket(eventId) {
     const res = await api.post('api/tickets', eventId)

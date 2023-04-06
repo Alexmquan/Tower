@@ -1,21 +1,34 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 ">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="">
-        <img alt="logo" src="../assets/img/Logo.png" height="45" />
-      </div>
-    </router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <!-- LOGIN COMPONENT HERE -->
-      <Login />
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 d-flex justify-content-between align-items-center">
+    <div class="mt-4">
+      <router-link class="navbar-brand" :to="{ name: 'Home' }">
+        <div class="">
+          <img alt="logo" src="../assets/img/Logo.png" height="45" />
+        </div>
+      </router-link>
     </div>
-    <div v-if="account.id">
-      <button type="button" class="btn btn-success selectable" data-bs-toggle="modal" data-bs-target="#eventModal">Create
-        Event</button>
+
+    <div class="d-flex">
+      <div class="collapse navbar-collapse mx-2" id="navbarText">
+        <button class="btn btn-success">
+          <Login />
+        </button>
+      </div>
+      <div v-if="account.id" class="">
+        <router-link :to="{ name: 'Account' }">
+          <button class="btn btn-success">
+            Manage Account
+          </button>
+        </router-link>
+        <!-- <div class="collapse navbar-collapse" id="navbarText">
+        <button class="btn btn-success">
+          <Login />
+        </button>
+      </div> -->
+        <button type="button" class="btn btn-success selectable  mx-2" data-bs-toggle="modal"
+          data-bs-target="#eventModal">Create
+          Event</button>
+      </div>
     </div>
   </nav>
   <CreateEventModal />
