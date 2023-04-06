@@ -1,6 +1,6 @@
 import { AppState } from "../AppState.js"
 import { Attendee } from "../models/Attendee.js"
-import { MyEvent } from "../models/TowerEvent.js"
+import { MyEvent, TowerEvent } from "../models/TowerEvent.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -9,7 +9,7 @@ class AttendeesService {
     // debugger
     const res = await api.get(`api/events/${eventId}/tickets`)
     AppState.attendees = res.data.map(a => new Attendee(a))
-    logger.log('[Atendees from Appstate', AppState.attendees)
+    logger.log('[Atendees from Appstate', res.data)
   }
   async createTicket(eventId) {
     const res = await api.post('api/tickets', eventId)

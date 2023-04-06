@@ -21,6 +21,7 @@
 import { computed } from "vue";
 import { AppState } from "../AppState.js";
 import { Attendee } from "../models/Attendee.js";
+import { Ticket } from "../models/Ticket.js";
 import { attendeesService } from "../services/AttendeesService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
@@ -29,7 +30,7 @@ import Pop from "../utils/Pop.js";
 export default {
   props: {
     myAttendees: {
-      type: Attendee,
+      type: Ticket,
       required: true
     }
   },
