@@ -15,6 +15,9 @@
 
 <script>
 import { Comment } from "../models/Comment.js";
+import { commentsService } from "../services/CommentsService.js";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
 
 export default {
   props: {
@@ -23,9 +26,21 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
 
-    return {}
+    return {
+      async deleteComment() {
+        try {
+          if (await Pop.confirm('Are you sure you want to delete this comment?')) {
+            const commentId = props.comment.id
+            await commentsService.deleteComment(commentId)
+          }
+        } catch (error) {
+          logger.error(error.message)
+          Pop.error(error.message)
+        }
+      }
+    }
   }
 }
 </script>
