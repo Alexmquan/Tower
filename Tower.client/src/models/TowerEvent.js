@@ -3,6 +3,7 @@ import { Profile } from "./Account.js"
 
 export class TowerEvent {
   constructor(data) {
+
     this.id = data.id
     this.name = data.name
     this.description = data.description
@@ -20,7 +21,8 @@ export class TowerEvent {
 
 export class MyEvent extends TowerEvent {
   constructor(data) {
-    super(data.TowerEvent)
+    super(data)
+
     this.attendeeId = data.id
   }
 }

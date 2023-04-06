@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid background-style">
     <!-- SECTION details card -->
     <!-- <section class="row details-bg" :style="{ backgroundImage: `url(${activeEvent?.coverImg})` }"> -->
     <section class="card">
@@ -20,13 +20,35 @@
             <div class="col-12">
               <p>{{ activeEvent?.description }}</p>
             </div>
-            <div class="col-9 d-flex align-items-end">
-              <h3>{{ activeEvent?.capacity }} </h3>
-              <h4 class="ms-2">spots left</h4>
+            <div class="col-12">
+              <div v-if="account.id == activeEvent?.creatorId">
+                <button class="btn btn-warning ms-3" data-bs-toggle="modal" data-bs-target="#eventModal">Edit
+                  Event</button>
+
+              </div>
             </div>
-            <div class="col-3 align-items-end d-flex">
-              <!-- FIXME add check so you cannot attend more than once -->
-              <button @click="createTicket()" class="btn btn-warning">Attend</button>
+            <div class="col-12" v-if="!activeEvent?.isCanceled">
+              <div class="row">
+                <div class="col-9 d-flex align-items-end">
+                  <h3>{{ activeEvent?.capacity }} </h3>
+                  <h4 class="ms-2">spots left</h4>
+                </div>
+                <div class="col-3 align-items-end d-flex">
+
+
+
+                  <div>
+                    <button v-if="account.id == activeEvent?.creatorId" @click="cancelEvent(activeEvent?.id)"
+                      class="btn btn-danger ms-3">Delete Event
+                    </button>
+                    <!-- FIXME add check so you cannot attend more than once -->
+                    <button @click="createTicket()" class="btn btn-warning">Attend</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-else class="col-12 isCanceled text-center">
+              <h1>Sorry this Event has been canceled</h1>
             </div>
           </div>
         </div>
@@ -63,6 +85,7 @@
       </div>
     </section>
   </div>
+  <CreateEventModal />
 </template>
 
 
@@ -87,7 +110,7 @@ export default {
         const eventId = route.params.eventId
         await eventsService.getEventById(eventId)
       } catch (error) {
-        logger.error(error.message)
+        logger.error(error)
         Pop.error(error.message)
       }
     }
@@ -97,7 +120,7 @@ export default {
         const eventId = route.params.eventId
         await attendeesService.getAttendees(eventId)
       } catch (error) {
-        logger.error(error.message)
+        logger.error(error)
         Pop.error(error.message)
       }
     }
@@ -107,7 +130,7 @@ export default {
         const eventId = route.params.eventId
         await commentsService.getCommentsByEvent(eventId)
       } catch (error) {
-        logger.error(error.message)
+        logger.error(error)
         Pop.error(error.message)
       }
     }
@@ -122,6 +145,7 @@ export default {
       activeEvent: computed(() => AppState.activeTowerEvent),
       attendees: computed(() => AppState.attendees),
       comments: computed(() => AppState.comments.reverse()),
+      account: computed(() => AppState.account),
 
       async createComment() {
         try {
@@ -129,7 +153,7 @@ export default {
           commentData.eventId = route.params.eventId
           await commentsService.createComment(commentData)
         } catch (error) {
-          logger.error(error.message)
+          logger.error(error)
           Pop.error(error.message)
         }
       },
@@ -138,10 +162,23 @@ export default {
         try {
           await attendeesService.createTicket({ eventId: route.params.eventId })
         } catch (error) {
-          logger.error(error.message)
+          logger.error(error)
+          Pop.error(error.message)
+        }
+      },
+
+      async cancelEvent(eventId) {
+        try {
+          if (await Pop.confirm('Are you sure you want to cancel the event?')) {
+            await eventsService.cancelEvent(eventId)
+          }
+        } catch (error) {
+          logger.error(error)
           Pop.error(error.message)
         }
       }
+
+
 
     }
   }
@@ -170,6 +207,10 @@ export default {
   // -webkit-filter: blur(8px);
 }
 
+.background-style {
+  background-color: rgb(54, 134, 117)
+}
+
 .attendee-picture {
   height: 3vh;
   width: 3vh;
@@ -191,5 +232,9 @@ export default {
 
 .comment-section {
   background-color: rgb(22, 22, 61);
+}
+
+.isCanceled {
+  background-color: rgb(153, 21, 21);
 }
 </style>
