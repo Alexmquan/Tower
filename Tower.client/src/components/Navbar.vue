@@ -13,16 +13,26 @@
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
+    <div v-if="account.id">
+      <button type="button" class="btn btn-success selectable" data-bs-toggle="modal" data-bs-target="#eventModal">Create
+        Event</button>
+    </div>
   </nav>
+  <CreateEventModal />
 </template>
 
 <script>
+import { computed } from "vue";
+import { AppState } from "../AppState.js";
+import CreateEventModal from "./CreateEventModal.vue";
 import Login from './Login.vue'
 export default {
   setup() {
-    return {}
+    return {
+      account: computed(() => AppState.account)
+    }
   },
-  components: { Login }
+  components: { Login, CreateEventModal }
 }
 </script>
 

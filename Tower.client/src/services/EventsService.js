@@ -16,7 +16,9 @@ class EventsService {
     logger.log("[active towerEvent", AppState.activeTowerEvent)
   }
 
+  async createEvent(eventData) {
 
+  }
 
 
 
