@@ -25,7 +25,7 @@
               <h4 class="ms-2">spots left</h4>
             </div>
             <div class="col-3 align-items-end d-flex">
-              <button class="btn btn-warning">Attend</button>
+              <button @click="createTicket()" class="btn btn-warning">Attend</button>
             </div>
           </div>
         </div>
@@ -36,13 +36,13 @@
     <section class="row">
       <p>See whos attending</p>
       <div class="col-12 attendee-section text-light" v-for="a in attendees" :key="a.id">
-        <img class="attendee-picture" :src="a.picture" alt="">
+        <img class="attendee-picture" :src="a.picture" :alt="a.name">
       </div>
     </section>
     <!-- SECTION Comments -->
     <section class="row justify-content-center">
 
-      <div class="col-9 comment-section rounded">
+      <div class="col-9 comment-section rounded my-5 pb-4">
         <p class="text-light mt-2">What people are saying</p>
         <div class="m-4">
           <form @submit.prevent="createComment()">
@@ -120,13 +120,22 @@ export default {
       commentBody,
       activeEvent: computed(() => AppState.activeTowerEvent),
       attendees: computed(() => AppState.attendees),
-      comments: computed(() => AppState.comments),
+      comments: computed(() => AppState.comments.reverse()),
 
       async createComment() {
         try {
           const commentData = commentBody.value
           commentData.eventId = route.params.eventId
           await commentsService.createComment(commentData)
+        } catch (error) {
+          logger.error(error.message)
+          Pop.error(error.message)
+        }
+      },
+
+      async createTicket() {
+        try {
+          await attendeesService.createTicket({ eventId: route.params.eventId })
         } catch (error) {
           logger.error(error.message)
           Pop.error(error.message)

@@ -17,3 +17,10 @@ export class TowerEvent {
 
   }
 }
+
+export class MyEvent extends TowerEvent {
+  constructor(data) {
+    super(data.TowerEvent)
+    this.attendeeId = data.id
+  }
+}

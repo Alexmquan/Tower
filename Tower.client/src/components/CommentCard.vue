@@ -1,8 +1,9 @@
 <template>
-  <div class="col-2"><img class="comment-image" :src="comment.creator.picture" :alt="comment.creator.name"></div>
-  <div class="col-10">
-    <div>
-      <h5>{{ comment.creator.name }}</h5>
+  <div class="col-1 d-flex justify-content-center align-items-center"><img class="comment-image"
+      :src="comment.creator.picture" :alt="comment.creator.name"></div>
+  <div class="col-11">
+    <div class="card-style ps-2 m-2 my-3 rounded d-flex flex-column justify-content-center">
+      <h5 class="pt-2">{{ comment.creator.name }}</h5>
       <p>{{ comment.body }}</p>
     </div>
   </div>
@@ -29,8 +30,12 @@ export default {
 
 <style lang="scss" scoped>
 .comment-image {
-  height: 5vh;
-  width: 5vh;
+  height: 6vh;
+  width: 6vh;
   border-radius: 50%;
+}
+
+.card-style {
+  background-color: white;
 }
 </style>
