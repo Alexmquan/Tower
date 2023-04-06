@@ -4,12 +4,14 @@
   </header>
   <main>
     <router-view />
+
   </main>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
+import CreateEventModal from "./components/CreateEventModal.vue"
 import Navbar from './components/Navbar.vue'
 
 export default {
@@ -18,7 +20,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, CreateEventModal }
 }
 </script>
 <style lang="scss">
