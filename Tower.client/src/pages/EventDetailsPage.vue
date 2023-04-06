@@ -39,16 +39,20 @@
 
                   <div>
                     <button v-if="account.id == activeEvent?.creatorId" @click="cancelEvent(activeEvent?.id)"
-                      class="btn btn-danger ms-3">Delete Event
+                      class="btn btn-danger ms-3">Cancel Event
                     </button>
                     <!-- FIXME add check so you cannot attend more than once -->
-                    <button @click="createTicket()" class="btn btn-warning">Attend</button>
+                    <button v-if="(activeEvent?.capacity > 0) || (attendees.eventId == activeEvent?.id)"
+                      @click="createTicket()" class="btn btn-warning">Attend</button>
                   </div>
                 </div>
               </div>
             </div>
             <div v-else class="col-12 isCanceled text-center">
               <h1>Sorry this Event has been canceled</h1>
+            </div>
+            <div v-if="(!activeEvent?.capacity > 0)" class="isCanceled text center">
+              <h1>Sorry this show is sold out</h1>
             </div>
           </div>
         </div>
@@ -58,8 +62,9 @@
     <!-- SECTION Attendees section-->
     <section class="row">
       <p>See whos attending</p>
-      <div class="col-12 attendee-section text-light" v-for="a in attendees" :key="a.id">
-        <img class="attendee-picture" :src="a.picture" :alt="a.name">
+      <div class="col-12 attendee-section text-light ">
+        <img v-for="a in attendees" :key="a.id" class="attendee-picture mx- mt-2" :src="a.profile.picture"
+          :alt="a.profile.name">
       </div>
     </section>
     <!-- SECTION Comments -->
@@ -67,7 +72,7 @@
 
       <div class="col-9 comment-section rounded my-5 pb-4">
         <p class="text-light mt-2">What people are saying</p>
-        <div class="m-4">
+        <div v-if="!activeEvent?.isCanceled" class="m-4">
           <form @submit.prevent="createComment()">
             <div>
               <textarea name="body" id="body" required cols="30" rows="6" v-model="commentBody.body" class="form-control"
