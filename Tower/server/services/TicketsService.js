@@ -49,7 +49,7 @@ class TicketsService {
       .populate({
         path: "event",
         populate: {
-          // FIXME may need to add another path later
+
           path: "creator"
         }
       })

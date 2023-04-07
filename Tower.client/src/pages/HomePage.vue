@@ -21,7 +21,6 @@
           <h2>{{ t.toUpperCase() }}</h2>
         </div>
       </div>
-
     </section>
 
     <!-- SECTION Event Cards -->

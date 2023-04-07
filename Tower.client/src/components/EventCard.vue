@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ name: 'EventDetails', params: { eventId: towerEvent.id } }">
-    <div class="card m-2 my-3 rounded">
+    <div class="card m-2 my-3 rounded elevation-4">
       <img :src="towerEvent.coverImg" :alt="towerEvent.name" height="300">
       <div v-if="!towerEvent.isCanceled && (towerEvent.capacity > 0)" class="p-2 card-bg">
         <h5>{{ towerEvent.name }}</h5>

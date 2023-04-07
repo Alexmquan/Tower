@@ -35,23 +35,22 @@
                 </div>
                 <div class="col-3 align-items-end d-flex">
 
-
-
                   <div>
                     <button v-if="account.id == activeEvent?.creatorId" @click="cancelEvent(activeEvent?.id)"
                       class="btn btn-danger ms-3">Cancel Event
                     </button>
-                    <!-- FIXME add check so you cannot attend more than once -->
+
                     <button v-if="(activeEvent?.capacity > 0) && (isAttending?.accountId != account.id)"
                       @click="createTicket()" class="btn btn-warning">Attend</button>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-else class="col-12 isCanceled text-center">
+            <div v-else class="col-12 isCanceled text-center d-flex justify-content-center align-items-center">
               <h1>Sorry this Event has been canceled</h1>
             </div>
-            <div v-if="(!activeEvent?.capacity > 0)" class="isCanceled text center">
+            <div v-if="(!activeEvent?.capacity > 0)"
+              class="isCanceled text-center d-flex justify-content-center align-items-center">
               <h1>Sorry this show is sold out</h1>
             </div>
           </div>
@@ -61,18 +60,19 @@
 
     <!-- SECTION Attendees section-->
     <section class="row">
-      <p>See whos attending</p>
+      <h5 class="my-3">See whos attending</h5>
       <div class="col-12 attendee-section text-light ">
         <img v-for="a in attendees" :key="a.id" class="attendee-picture mx- mt-2" :src="a.profile.picture"
           :alt="a.profile.name">
       </div>
     </section>
+
     <!-- SECTION Comments -->
     <section class="row justify-content-center">
 
       <div class="col-9 comment-section rounded my-5 pb-4">
         <p class="text-light mt-2">What people are saying</p>
-        <div v-if="!activeEvent?.isCanceled" class="m-4">
+        <div v-if="!activeEvent?.isCanceled && account.id" class="m-4">
           <form @submit.prevent="createComment()">
             <div>
               <textarea name="body" id="body" required cols="30" rows="6" v-model="commentBody.body" class="form-control"
@@ -217,7 +217,7 @@ export default {
 
 .info-style {
   height: 40vh;
-  text-shadow: 2px 2px 6px black;
+  text-shadow: 1px 1px 1px black;
 }
 
 .details-bg {
@@ -229,7 +229,8 @@ export default {
 }
 
 .background-style {
-  background-color: rgb(54, 134, 117)
+  background-color: rgb(54, 134, 117);
+  min-height: 95vh;
 }
 
 .attendee-picture {

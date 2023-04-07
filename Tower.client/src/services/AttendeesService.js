@@ -21,10 +21,9 @@ class AttendeesService {
   async deleteTicket(attendeeId) {
     const res = await api.delete(`api/tickets/${attendeeId}`)
     logger.log('[Removing ticket]', res.data)
-    // FIXME not responsive but works on hard refresh
-    const ticketIndex = AppState.attendees.findIndex(a => a.id == attendeeId)
+    const ticketIndex = AppState.myAttendees.findIndex(a => a.id == attendeeId)
     if (ticketIndex !== -1) {
-      AppState.attendees.splice(ticketIndex, 1)
+      AppState.myAttendees.splice(ticketIndex, 1)
     }
 
     const eventIndex = AppState.myEvents.findIndex(e => e.id == attendeeId)

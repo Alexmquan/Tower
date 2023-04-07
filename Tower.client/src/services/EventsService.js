@@ -39,7 +39,6 @@ class EventsService {
     const res = await api.delete('api/events/' + eventId)
     logger.log('[Removing ticket]', res.data)
     AppState.activeTowerEvent.isCanceled = true
-
   }
 }
 
